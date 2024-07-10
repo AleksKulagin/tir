@@ -16,6 +16,9 @@ target_img = pygame.image.load('img/rab.png')
 crosshair_img = pygame.image.load('img/scope.png')
 shot_img = pygame.image.load('img/hole.png')
 
+# Загрузка звука выстрела
+shot_sound = pygame.mixer.Sound('sounds/shot.wav')
+
 # Определение начальных параметров
 TARGET_SIZE = 100
 target_x = random.randint(0, WIDTH - TARGET_SIZE)
@@ -23,7 +26,7 @@ target_y = random.randint(0, HEIGHT - TARGET_SIZE)
 target_rect = pygame.Rect(target_x, target_y, TARGET_SIZE, TARGET_SIZE)
 
 # Параметры игры
-target_display_time = 1000  # В миллисекундах
+target_display_time = 2000  # В миллисекундах
 misses = 0
 hits = 0
 shots = 0
@@ -49,6 +52,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # Воспроизведение звука выстрела
+            shot_sound.play()
+
             shots += 1
             mouse_x, mouse_y = event.pos
             if target_rect.collidepoint(mouse_x, mouse_y) and pygame.time.get_ticks() < time_to_hide:
